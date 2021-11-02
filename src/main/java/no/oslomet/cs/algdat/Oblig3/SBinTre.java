@@ -14,14 +14,14 @@ public class SBinTre<T> {
     private static final class Node<T>   // en indre nodeklasse
     {
         private T verdi;                   // nodens verdi
-        private Node<T> venstre, hoyre;    // venstre og hoyre barn
+        private Node<T> venstre, høyre;    // venstre og høyre barn
         private Node<T> forelder;          // forelder
 
         // konstruktør
         private Node(T verdi, Node<T> v, Node<T> h, Node<T> forelder) {
             this.verdi = verdi;
             venstre = v;
-            hoyre = h;
+            høyre = h;
             this.forelder = forelder;
         }
 
@@ -58,7 +58,7 @@ public class SBinTre<T> {
         while (p != null) {
             int cmp = comp.compare(verdi, p.verdi);
             if (cmp < 0) p = p.venstre;
-            else if (cmp > 0) p = p.hoyre;
+            else if (cmp > 0) p = p.høyre;
             else return true;
         }
 
@@ -74,7 +74,7 @@ public class SBinTre<T> {
 
         StringJoiner s = new StringJoiner(", ", "[", "]");
 
-        Node<T> p = forstePostorden(rot); // går til den første i postorden
+        Node<T> p = førstePostorden(rot); // går til den første i postorden
         while (p != null) {
             s.add(p.verdi.toString());
             p = nestePostorden(p);
@@ -89,7 +89,7 @@ public class SBinTre<T> {
 
     //oppgave 1
     // legger inn elementet hvis den er forste element saa den er rot node
-    // hvis den er ikke forte saa legger vi den til hoyre hvis den er storre eller lik noden og til venstre hvis den er mindre en noden
+    // hvis den er ikke forte saa legger vi den til høyre hvis den er storre eller lik noden og til venstre hvis den er mindre en noden
     //vi begynner fra rotnoden 
     public boolean leggInn(T verdi) { 
         Objects.requireNonNull(verdi, "Ulovlig med nullverdier!");
@@ -101,7 +101,7 @@ public class SBinTre<T> {
         {
             q = p;                                 // q er forelder til p
             cmp = comp.compare(verdi,p.verdi);     // bruker komparatoren
-            p = cmp < 0 ? p.venstre : p.hoyre;     // flytter p
+            p = cmp < 0 ? p.venstre : p.høyre;     // flytter p
         }
 
         // p er nå null, dvs. ute av treet, q er den siste vi passerte
@@ -110,7 +110,7 @@ public class SBinTre<T> {
 
         if (q == null) rot = p;                  // p blir rotnode
         else if (cmp < 0) q.venstre = p;         // venstre barn til q
-        else q.hoyre = p;                        // hoyre barn til q
+        else q.høyre = p;                        // høyre barn til q
         p.forelder = q;                          // forelder til p
 
         antall++;                                // én verdi mer i treet
@@ -129,13 +129,13 @@ public class SBinTre<T> {
       while (p != null){            // leter etter verdi
         int cmp = comp.compare(verdi,p.verdi);      // sammenligner
         if (cmp < 0) { q = p; p = p.venstre; }      // går til venstre
-        else if (cmp > 0) { q = p; p = p.hoyre; }   // går til hoyre
+        else if (cmp > 0) { q = p; p = p.høyre; }   // går til høyre
         else break;    // den søkte verdien ligger i p
       }
       if (p == null) return false;   // finner ikke verdi
   
-      if (p.venstre == null || p.hoyre == null){  // Tilfelle 1) og 2)
-        Node<T> b = p.venstre != null ? p.venstre : p.hoyre;  // b for barn
+      if (p.venstre == null || p.høyre == null){  // Tilfelle 1) og 2)
+        Node<T> b = p.venstre != null ? p.venstre : p.høyre;  // b for barn
         if (p == rot){ 
             rot = b;
             b.forelder = null;
@@ -146,13 +146,13 @@ public class SBinTre<T> {
             b.forelder = q;
         }
         else {
-            q.hoyre = b;
+            q.høyre = b;
             b.forelder = q;
         }
       }
       else  // Tilfelle 3)
       {
-        Node<T> s = p, r = p.hoyre;   // finner neste i inorden
+        Node<T> s = p, r = p.høyre;   // finner neste i inorden
         while (r.venstre != null)
         {
           s = r;    // s er forelder til r
@@ -161,10 +161,10 @@ public class SBinTre<T> {
   
         p.verdi = r.verdi;   // kopierer verdien i r til p
 
-        if(r.hoyre != null) r = s;
+        if(r.høyre != null) r = s;
   
-        if (s != p) s.venstre = r.hoyre;
-        else s.hoyre = r.hoyre;
+        if (s != p) s.venstre = r.høyre;
+        else s.høyre = r.høyre;
       }
   
       antall--;   // det er nå én node mindre i treet
@@ -198,7 +198,7 @@ public class SBinTre<T> {
             int c = comp.compare(verdi, n.verdi);
             if(c==0){i++;}
             if(c>=0){
-                n=n.hoyre;
+                n=n.høyre;
             }else{
                 n=n.venstre;
             }
@@ -214,7 +214,7 @@ public class SBinTre<T> {
         endringer ++;*/
 
         if(antall >0){
-            if(p.venstre == null && p.hoyre == null){
+            if(p.venstre == null && p.høyre == null){
                 p = null;
                 antall --;
                 endringer ++;
@@ -224,34 +224,34 @@ public class SBinTre<T> {
                 nullstill(p.venstre);
             }
             else{
-                nullstill(p.hoyre);
+                nullstill(p.høyre);
             }
         }
 
        
     }
 
-    private static <T> Node<T> forstePostorden(Node<T> p) {
+    private static <T> Node<T> førstePostorden(Node<T> p) {
         if(p == null){ // sjekker om noden er null saa gaar vi ut av metoden
             return null;
         }
-        forstePostorden(p.venstre); // kaller metoden forstePostorden og gi hoyre barn til p som parameter
-        return p.hoyre;
+        førstePostorden(p.venstre); // kaller metoden forstePostorden og gi høyre barn til p som parameter
+        return p.høyre;
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
         //forste sjekker vi om forelder node er null, hvis ikke
-        // saa sjekker vi om p er hoyre barn og har ikke sosken(forelder node har ikke venstre barn) saa forelder noden er neste postorden node
-        //Eller kaller vi forste postorden metode med p som parameter hvis p er hoyre barn eller p sosken hvis p er venstre barn.
+        // saa sjekker vi om p er høyre barn og har ikke sosken(forelder node har ikke venstre barn) saa forelder noden er neste postorden node
+        //Eller kaller vi forste postorden metode med p som parameter hvis p er høyre barn eller p sosken hvis p er venstre barn.
         if(p.forelder == null){
             return null;
         }
 
-        if(p.forelder.venstre == p || p.forelder.hoyre == null){
+        if(p.forelder.venstre == p || p.forelder.høyre == null){
             return p.forelder;
         }
 
-        return forstePostorden(p.forelder.hoyre);
+        return førstePostorden(p.forelder.høyre);
         
 
 
@@ -264,7 +264,7 @@ public class SBinTre<T> {
         if (antall == 0){
             return;
         }
-        Node<T> n = forstePostorden(rot); // setter n til neste node i post orden starter fra rot node
+        Node<T> n = førstePostorden(rot); // setter n til neste node i post orden starter fra rot node
         System.out.println(n);
         while(n !=null){
             oppgave.utførOppgave(n.verdi);
@@ -281,9 +281,9 @@ public class SBinTre<T> {
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
         if(p==null){
             return;
-        } // fra forelesningen for aa skrive ut postorden rekrusivt kaller vi rekursivt venstre saa hoyre barn og skriver ut
+        } // fra forelesningen for aa skrive ut postorden rekrusivt kaller vi rekursivt venstre saa høyre barn og skriver ut
         postordenRecursive(p.venstre, oppgave);
-        postordenRecursive(p.hoyre, oppgave);
+        postordenRecursive(p.høyre, oppgave);
         oppgave.utførOppgave(p.verdi);
         System.out.println(p);
     }
@@ -298,7 +298,7 @@ public class SBinTre<T> {
         ArrayList<T> verdiList = new ArrayList<>();// Arraylist til verier
 
         while( noder.size() != 0){
-            // forst legger vi noden n til listen noder saa legger vi hoyre barn og venstre barn hvis det finnes
+            // forst legger vi noden n til listen noder saa legger vi høyre barn og venstre barn hvis det finnes
             Node<T> n = noder.poll();
             verdiList.add(n.verdi);
 
@@ -307,8 +307,8 @@ public class SBinTre<T> {
             if(n.venstre != null){ // sjekker om n har ikke venstre barn og legger vi til listen noder venstre barn til node n
                 noder.add(n.venstre);
             }
-            if(n.hoyre != null){ // sjekekr om n har ikke hoyre barn og legger vi til listen noder hoyre barn til node n
-                noder.add(n.hoyre);
+            if(n.høyre != null){ // sjekekr om n har ikke høyre barn og legger vi til listen noder høyre barn til node n
+                noder.add(n.høyre);
             }
         }
 
