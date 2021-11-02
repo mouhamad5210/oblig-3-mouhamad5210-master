@@ -267,7 +267,7 @@ public class SBinTre<T> {
         Node<T> n = forstePostorden(rot); // setter n til neste node i post orden starter fra rot node
         System.out.println(n);
         while(n !=null){
-            oppgave.utforOppgave(n.verdi);
+            oppgave.utførOppgave(n.verdi);
             System.out.println(nestePostorden(n));
         }
     }
@@ -284,7 +284,7 @@ public class SBinTre<T> {
         } // fra forelesningen for aa skrive ut postorden rekrusivt kaller vi rekursivt venstre saa hoyre barn og skriver ut
         postordenRecursive(p.venstre, oppgave);
         postordenRecursive(p.hoyre, oppgave);
-        oppgave.utforOppgave(p.verdi);
+        oppgave.utførOppgave(p.verdi);
         System.out.println(p);
     }
 
