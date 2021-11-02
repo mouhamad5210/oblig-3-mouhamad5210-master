@@ -209,13 +209,30 @@ public class SBinTre<T> {
     }
 
     public void nullstill() {
-        rot = null;
-        rot.høyre = null;
-        rot.venstre = null;
-        antall ++;
-        endringer ++;
+        if(antall != 0){
+            Node<T> n = rot;
+            nullstill(rot);
+            n = null;
+            antall = 0;
+            endringer = 0;
+            
+        }
 
        
+    }
+    public void nullstill(Node<T>p){
+        if(antall != 0){
+            if(p.venstre != null){
+                nullstill(p.venstre);
+                p.venstre = null;
+            }
+            if(p.høyre != null){
+                nullstill(p.høyre);
+                p.høyre = null;
+            }
+            p.forelder = null;
+            p.verdi = null;
+        }
     }
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
