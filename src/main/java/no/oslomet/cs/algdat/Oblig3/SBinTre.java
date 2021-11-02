@@ -210,37 +210,45 @@ public class SBinTre<T> {
 
     public void nullstill() {
         if(antall != 0){
-            Node<T> n = rot;
             nullstill(rot);
-            n = null;
+            rot = null;
             antall = 0;
-            endringer = 0;
+            endringer ++;
             
         }
+        else{return ;}
 
        
     }
     public void nullstill(Node<T>p){
-        if(antall != 0){
-            if(p.venstre != null){
-                nullstill(p.venstre);
-                p.venstre = null;
-            }
-            if(p.høyre != null){
-                nullstill(p.høyre);
-                p.høyre = null;
-            }
-            p.forelder = null;
-            p.verdi = null;
+        if(antall == 0){
+            return;
         }
+        if(p.venstre != null){
+            nullstill(p.venstre);
+            p.venstre = null;
+        }
+        if(p.høyre != null){
+            nullstill(p.høyre);
+            p.høyre = null;
+        }
+        p.forelder = null;
+        p.verdi = null;
     }
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
-        if(p == null){ // sjekker om noden er null saa gaar vi ut av metoden
-            return null;
+        while(true){
+            if(p.venstre != null){
+                p = p.venstre;
+            }
+            else if(p.høyre != null){
+                p = p.høyre;
+            }
+            else {
+                break;
+            }
         }
-        førstePostorden(p.venstre); // kaller metoden forstePostorden og gi høyre barn til p som parameter
-        return p.høyre;
+        return p;
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
@@ -283,13 +291,13 @@ public class SBinTre<T> {
     }
 
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
-        if(p==null){
-            return;
-        } // fra forelesningen for aa skrive ut postorden rekrusivt kaller vi rekursivt venstre saa høyre barn og skriver ut
+        if(p!=null){
+
         postordenRecursive(p.venstre, oppgave);
         postordenRecursive(p.høyre, oppgave);
         oppgave.utførOppgave(p.verdi);
         System.out.println(p);
+        }
     }
 
     public ArrayList<T> serialize() {
