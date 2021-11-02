@@ -208,25 +208,12 @@ public class SBinTre<T> {
         
     }
 
-    public void nullstill(Node<T>p) {
-        /*rot = null;
+    public void nullstill() {
+        rot = null;
+        rot.høyre = null;
+        rot.venstre = null;
         antall ++;
-        endringer ++;*/
-
-        if(antall >0){
-            if(p.venstre == null && p.høyre == null){
-                p = null;
-                antall --;
-                endringer ++;
-                nullstill(p.forelder);
-            }
-            else if(p.venstre != null){
-                nullstill(p.venstre);
-            }
-            else{
-                nullstill(p.høyre);
-            }
-        }
+        endringer ++;
 
        
     }
