@@ -58,3 +58,63 @@ i metoden postordenRecursice(Oppgave<? super T> oppgave)  er det bare en kall ti
 først sjekker om parameter noden er null
 hvis ikke så kaller metoden postordenRecursive med p sin venstre barn som parameter så kaller amme metode postordenRecursive med p sin høyre barn
 til slutt utfører vi oppgaven elelr printe verdien hvis oppgaven er print f.eks  
+
+
+
+
+
+# Oppgave 5
+metode seralize som gjør om binærtreet til et array
+først sjekekr om rot node er null hvis ike  så oppretter vi 1- Queue list, og den skal legge inn alle noder og skal vi bruke den til å rekke noder en og en  2- ArrayList som har verdier 
+ved hjelp av while løkke tar vi en og en node fra liste Queue og legger verdien til noden i verider ArrayList så legger vi til Queue n sin venstre barn og n sin høyre barn hvis de er ikke null 
+til at alle elementer i treet ble lagt til Queue og trekket igjen og verdi liste er fylt opp med verdier
+tilslutt returnerer vi en verdi lisit.
+
+i deserialize metode oppretter vi en ny tom tre
+ så ved hjelp av for lokke  legger vi en og en node til treet ved hjelp av metoden leggInn så har  vi en tre fra ArrayList 
+til slutt returnerer vi treet vi lagde-.
+
+
+
+
+# oppgave 6 // har feil i kjøringen jeg kunne ikke fikse det 
+metoden fjern her har vi kopiert koden fra kopondiet 
+først sjekekr om veriden som oppgitt i parameteren er null hvis null så return false.
+så oppretter vi to noder (p) som referer til rot og en(q) peker til p sin forelder 
+så ved hjelp av while løkke sjekekr om oppgitt verdi i parameter er større eller mindre en verdien i noden p.
+hvis mindre så går vi til venstre barn og q er venstre barn forelder (p)
+hvis større  så går vi til høyre barn og q er høyre barn forelder (p)
+eller går iv ut av løkken 
+etter at vi er ut av løkken så har vi p enten er null eller p verdi er lik parameter verdie (verdien som vi ønsker å fejrne).
+hvis p er null så verdien finnes ikke og returnerer vi null.
+hvis ikke så er vi i verdien som vi skal fjerne 
+hvis p sin venstre barn eller høyre barn er null så oppretter vi en node (b) med peker til den barnet som ikke er null
+hvis p er rot node:
+  så setter vi b som er  rot node og nullstiller forelderen 
+hvis p er venstre barn til sin forelder så
+  p sin forelder sin venstre barn er b og b sin forelder er faren til p ( så vi har fjernet pekern til noden p og   den blir fjernet av java)
+eller hvis p er høyre barn så setter forelderen til b til å referere til noden q.
+
+siste tilfelle
+først opretter vi to noder en er (s) som er lik p og den andre er (r) som er p sin høyre barn
+ved hjelp av while løkke går vi til siste venstre barn som ikke er null og (s) peker på den og r peker på venstre baran
+vi kopierer veriden i r til p
+hvis r sin høyre barn er null så r er like sin forelder (s) 
+hvis noden s er ikke lik p  så venstre barn til s er lik høyre barn til p ELLER er høyre barn til s er like høyre barn til p
+til slutt nullstiller antall (antall = 0)
+og øker endringer med 1
+og returnerer true ( at noden ble fjernet)
+
+
+i metoden fjernAlle
+hvis treet er ikke tom  så går vi i while løkke  og finner noder som har samme verdi som skal fjernes ved hjelp av metoden inneholder.
+øker telleren med 1 og fjerner noden. 
+til slutt returnerer vi antall noder som er fjernet.
+
+i metoden nullstill har jeg kjørings feil kunne ikke finne feilen 
+første tenkte jeg å nullstille bare rot noden så alt blir nullstilt automatisk siden det er ingen peker som peker på de men fikk feil i kjøring. derfor kommentert det ut 
+så prøvde jeg å går i hele treet og nullstilel alle pekere og ved å sjekke om venstre barn er ikek null og høyre barn er ikke null og nullstille dem hvis begge er null så nullstller jeg det node ogv. men fikk en feil også i kjøring 
+
+
+
+
