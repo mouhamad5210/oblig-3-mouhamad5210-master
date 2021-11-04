@@ -196,9 +196,9 @@ public class SBinTre<T> {
         Node<T> n = rot;
         while(n!= null){
             int c = comp.compare(verdi, n.verdi);
-            if(c == 0){i++; n=n.høyre;}
-            else if(c>0){n=n.høyre;}
-            else { n =n.venstre;} // hvis c<0
+            if(c > 0){n=n.høyre;}
+            else if(c<0){n=n.venstre;}
+            else { i++; n=n.høyre;} // hvis c<0
         }
         return i;
 
