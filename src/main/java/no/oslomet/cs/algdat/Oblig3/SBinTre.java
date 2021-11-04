@@ -190,7 +190,7 @@ public class SBinTre<T> {
             return i;
         }
         if(antall() == 0){
-            return i; // den skal returnerer 0 fordi treet er tom
+            return 0; // den skal returnerer 0 fordi treet er tom
         }
 
         Node<T> n = rot;
