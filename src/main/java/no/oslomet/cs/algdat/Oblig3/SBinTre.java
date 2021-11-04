@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.List;
 
 public class SBinTre<T> {
-    private static final class Node<T>   // en indre nodeklasse
+   private static final class Node<T>   // en indre nodeklasse
     {
         private T verdi;                   // nodens verdi
         private Node<T> venstre, høyre;    // venstre og høyre barn
@@ -111,7 +111,7 @@ public class SBinTre<T> {
         if (q == null) rot = p;                  // p blir rotnode
         else if (cmp < 0) q.venstre = p;         // venstre barn til q
         else q.høyre = p;                        // høyre barn til q
-        p.forelder = q;                          // forelder til p
+
 
         antall++;                                // én verdi mer i treet
         endringer ++;
@@ -138,16 +138,15 @@ public class SBinTre<T> {
         Node<T> b = p.venstre != null ? p.venstre : p.høyre;  // b for barn
         if (p == rot){ 
             rot = b;
-            b.forelder = null;
-
+            if(b!= null){ b.forelder = q;}
         }
-        else if (p == q.venstre){ 
+        else if (p == q.venstre) {
             q.venstre = b;
-            b.forelder = q;
+            if (b != null) {b.forelder = q;}
         }
         else {
             q.høyre = b;
-            b.forelder = q;
+            if(b!=null){ b.forelder = q;}
         }
       }
       else  // Tilfelle 3)
@@ -161,8 +160,7 @@ public class SBinTre<T> {
   
         p.verdi = r.verdi;   // kopierer verdien i r til p
 
-        if(r.høyre != null) r = s;
-  
+        if(r.høyre != null) r.høyre.forelder = s;
         if (s != p) s.venstre = r.høyre;
         else s.høyre = r.høyre;
       }
@@ -174,34 +172,33 @@ public class SBinTre<T> {
 
     public int fjernAlle(T verdi) {
         int teller =0;
-        if(antall > 0){
+        if(antall == 0){return 0;}
+
+
             while(inneholder(verdi)){
-                teller ++;
                 fjern(verdi);
+                teller ++;
             }
             return teller;
-        }
-        else{
-            System.out.println("Ingen Elementer !");
-            return 0;
-        }
+
+
     }
 
     public int antall(T verdi) {
         int i = 0;
-        if(rot == null){
-            return 0;
+        if(verdi == null){
+            return i;
+        }
+        if(antall() == 0){
+            return i; // den skal returnerer 0 fordi treet er tom
         }
 
         Node<T> n = rot;
         while(n!= null){
             int c = comp.compare(verdi, n.verdi);
-            if(c==0){i++;}
-            if(c>=0){
-                n=n.høyre;
-            }else{
-                n=n.venstre;
-            }
+            if(c == 0){i++; n=n.høyre;}
+            if(c>0){n=n.høyre;}
+            else { n =n.venstre;} // hvis c<0
         }
         return i;
 
@@ -216,39 +213,35 @@ public class SBinTre<T> {
             endringer ++;
             
         }
-        else{return ;}
 
        
     }
     public void nullstill(Node<T>p){
-        if(antall == 0){
+        if(antall != 0) { // hvis treet er tom gå ut av metoden
+            if (p.venstre != null) { //nullstiller venstre subtre
+                nullstill(p.venstre);
+                p.venstre = null;
+            }
+            if (p.høyre != null) { // nullstiller høyre subtre
+                nullstill(p.høyre);
+                p.høyre = null;
+            }
+            p.forelder = null;
+            p.verdi = null;
+        }
+        else{ // hvis antall er lik 0 gå ut av metoden
             return;
         }
-        if(p.venstre != null){
-            nullstill(p.venstre);
-            p.venstre = null;
-        }
-        if(p.høyre != null){
-            nullstill(p.høyre);
-            p.høyre = null;
-        }
-        p.forelder = null;
-        p.verdi = null;
     }
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
-        while(true){
-            if(p.venstre != null){
-                p = p.venstre;
-            }
-            else if(p.høyre != null){
-                p = p.høyre;
-            }
-            else {
-                break;
-            }
-        }
-        return p;
+
+       while(true){ // loop fortsetter til at jeg kommer til else break i tredje linje så er jeg i førstePostorden node og returnerer jeg den
+           if(p.venstre != null){ p = p.venstre;} //
+           else if(p.høyre != null){ p = p.høyre;}
+           else break;
+       }
+       return p;
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
@@ -263,7 +256,9 @@ public class SBinTre<T> {
             return p.forelder;
         }
 
-        return førstePostorden(p.forelder.høyre);
+        else {
+            return førstePostorden(p.forelder.høyre);
+        }
         
 
 
@@ -277,10 +272,11 @@ public class SBinTre<T> {
             return;
         }
         Node<T> n = førstePostorden(rot); // setter n til neste node i post orden starter fra rot node
-        System.out.println(n);
+        //System.out.println(n);
         while(n !=null){
             oppgave.utførOppgave(n.verdi);
-            System.out.println(nestePostorden(n));
+            n = nestePostorden(n); // går til neste postorden og printer den
+            System.out.println(n);
         }
     }
 
@@ -333,6 +329,10 @@ public class SBinTre<T> {
             ttre.leggInn(data.get(i));
         }
         return ttre;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(" HHH");
     }
 
         
