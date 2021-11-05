@@ -13,7 +13,7 @@ import java.util.List;
 public class SBinTre<T> {
        private static final class Node<T>   // en indre nodeklasse
     {
-       private T verdi;                   // nodens verdi
+         private T verdi;                   // nodens verdi
         private Node<T> venstre, høyre;    // venstre og høyre barn
         private Node<T> forelder;          // forelder
 
@@ -90,8 +90,8 @@ public class SBinTre<T> {
     //oppgave 1
     // legger inn elementet hvis den er forste element saa den er rot node
     // hvis den er ikke forte saa legger vi den til høyre hvis den er storre eller lik noden og til venstre hvis den er mindre en noden
-    //vi begynner fra rotnoden 
-    public boolean leggInn(T verdi) { 
+    //vi begynner fra rotnoden
+    public boolean leggInn(T verdi) {
         Objects.requireNonNull(verdi, "Ulovlig med nullverdier!");
 
         Node<T> p = rot, q = null;               // p starter i roten
@@ -121,11 +121,11 @@ public class SBinTre<T> {
     }
 
     public boolean fjern(T verdi){  // hører til klassen SBinTre
-        
+
       if (verdi == null) return false;  // treet har ingen nullverdier
-  
+
       Node<T> p = rot, q = null;   // q skal være forelder til p
-  
+
       while (p != null){            // leter etter verdi
         int cmp = comp.compare(verdi,p.verdi);      // sammenligner
         if (cmp < 0) { q = p; p = p.venstre; }      // går til venstre
@@ -133,10 +133,10 @@ public class SBinTre<T> {
         else break;    // den søkte verdien ligger i p
       }
       if (p == null) return false;   // finner ikke verdi
-  
+
       if (p.venstre == null || p.høyre == null){  // Tilfelle 1) og 2)
         Node<T> b = p.venstre != null ? p.venstre : p.høyre;  // b for barn
-        if (p == rot){ 
+        if (p == rot){
             rot = b;
             if(b!= null){ b.forelder = q;}
         }
@@ -157,14 +157,14 @@ public class SBinTre<T> {
           s = r;    // s er forelder til r
           r = r.venstre;
         }
-  
+
         p.verdi = r.verdi;   // kopierer verdien i r til p
 
         if(r.høyre != null) r.høyre.forelder = s;
         if (s != p) s.venstre = r.høyre;
         else s.høyre = r.høyre;
       }
-  
+
       antall--;   // det er nå én node mindre i treet
       endringer ++;
       return true;
@@ -203,7 +203,7 @@ public class SBinTre<T> {
         }
         return i;
 
-        
+
     }
 
 
@@ -214,10 +214,10 @@ public class SBinTre<T> {
             rot = null;
             antall = 0;
             endringer ++;
-            
+
         }
 
-       
+
     }
     public void nullstill(Node<T>p){
         if(antall != 0) { // hvis treet er tom gå ut av metoden
@@ -251,19 +251,19 @@ public class SBinTre<T> {
         //forste sjekker vi om forelder node er null, hvis ikke
         // saa sjekker vi om p er høyre barn og har ikke sosken(forelder node har ikke venstre barn) saa forelder noden er neste postorden node
         //Eller kaller vi forste postorden metode med p som parameter hvis p er høyre barn eller p sosken hvis p er venstre barn.
-        Node<T> father = p.forelder;
+        Node<T> pFar = p.forelder;
         if(p.forelder == null){
             return null;
         }
 
-        if(p.forelder.høyre == p || p.høyre == null){
+        if(p.forelder.høyre== null || p.forelder.høyre== p){
             return p.forelder;
         }
 
         else {
             return førstePostorden(p.forelder.høyre);
         }
-        
+
 
 
     }
@@ -342,8 +342,9 @@ public class SBinTre<T> {
 
 
 
-        
+
 
 } // ObligSBinTre
+
 
 
