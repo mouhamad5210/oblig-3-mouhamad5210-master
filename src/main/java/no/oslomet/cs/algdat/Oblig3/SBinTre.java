@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.List;
 
 public class SBinTre<T> {
-    private static final class Node<T>   // en indre nodeklasse
+       private static final class Node<T>   // en indre nodeklasse
     {
         private T verdi;                   // nodens verdi
         private Node<T> venstre, høyre;    // venstre og høyre barn
@@ -197,16 +197,14 @@ public class SBinTre<T> {
         Node<T> n = rot;
         while(n!= null){
             int c = comp.compare(verdi, n.verdi);
-            if(c > 0){if(n.høyre!=null)n=n.høyre;}
-            else if(c<0){if(n.venstre!=null)n=n.venstre;}
+            if(c > 0){n=n.høyre;}
+            else if(c<0){n=n.venstre;}
             else { i++; n=n.høyre;} // hvis c<0
         }
         return i;
 
         
     }
-
-
 
 
 
@@ -292,25 +290,26 @@ public class SBinTre<T> {
     }
 
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
+        if(antall == 0){return;}
         if(p!=null){
 
-        postordenRecursive(p.venstre, oppgave);
-        postordenRecursive(p.høyre, oppgave);
-        oppgave.utførOppgave(p.verdi);
-        System.out.println(p);
+            postordenRecursive(p.venstre, oppgave);
+            postordenRecursive(p.høyre, oppgave);
+            oppgave.utførOppgave(p.verdi);
+            System.out.println(p);
         }
     }
 
     public ArrayList<T> serialize() {
         if(rot == null){ //  hvis det er ingen elementer gaa ut av metoden
-            System.out.println("Ingen elementer !!");
+           // System.out.println("Ingen elementer !!");
             return null;
         }
 
         Queue<Node> noder = new LinkedList(); // ArrayList til aa legge node treet i ko
         ArrayList<T> verdiList = new ArrayList<>();// Arraylist til verier
 
-        while( noder.size() != 0){
+        while( !noder.isEmpty()){
             // forst legger vi noden n til listen noder saa legger vi høyre barn og venstre barn hvis det finnes
             Node<T> n = noder.poll();
             verdiList.add(n.verdi);
@@ -330,16 +329,19 @@ public class SBinTre<T> {
 
     static <K> SBinTre<K> deserialize(ArrayList<K> data, Comparator<? super K> c) {
         SBinTre<K> ttre = new SBinTre<>(c);
-        for(int i=0; i<data.size(); i++){
-            ttre.leggInn(data.get(i));
+
+        for(K verdi : data){
+            ttre.leggInn(verdi);
         }
+       /* for(int i=0; i<data.size(); i++){
+            ttre.leggInn(data.get(i));
+        }*/
         return ttre;
     }
 
-    public static void main(String[] args) {
-        System.out.println(" HHH");
-    }
+
 
         
 
 } // ObligSBinTre
+
