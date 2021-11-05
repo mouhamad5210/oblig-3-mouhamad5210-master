@@ -1,3 +1,6 @@
+package no.oslomet.cs.algdat.Oblig3;
+
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
