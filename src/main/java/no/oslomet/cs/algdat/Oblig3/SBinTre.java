@@ -185,35 +185,29 @@ public class SBinTre<T> {
     }
 
     public int antall(T verdi) {
+           public int antall(T verdi) {
         int i = 0;
         if(verdi == null){
             return i;
         }
         if(antall() == 0){
-           int ant_forekomster = 0;
-        if (verdi == null){ // hvis verdien ikke er i tabell
-            return ant_forekomster;
+            return 0; // den skal returnerer 0 fordi treet er tom
         }
-        if(antall()== 0){
-            return 0;
+
+        Node<T> n = rot;
+        while(n!= null){
+            int c = comp.compare(verdi, n.verdi);
+            if(c > 0){n=n.høyre;}
+            else if(c<0){n=n.venstre;}
+            else { i++; n=n.høyre;} // hvis c<0
         }
-        Node<T>temp = rot;
-        while(temp!= null){
-              int cmp = comp.compare(verdi, temp.verdi); // vi sammenligner verdien og forelder noden
-              if(cmp > 0){
-                  temp = temp.høyre; // traversere på høyre subtre
-              }
+        return i;
 
-              else if(cmp < 0){
-                  temp = temp.venstre; // traversere på venstre subtre
-              }
-              else{
-                  ant_forekomster++;
-                  temp = temp.høyre;
-              }
-
-         }
-         return ant_forekomster;
+        
+    }
+        
+   
+            
 
         
     }
