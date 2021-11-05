@@ -13,7 +13,7 @@ import java.util.List;
 public class SBinTre<T> {
        private static final class Node<T>   // en indre nodeklasse
     {
-         private T verdi;                   // nodens verdi
+        private T verdi;                   // nodens verdi
         private Node<T> venstre, høyre;    // venstre og høyre barn
         private Node<T> forelder;          // forelder
 
@@ -307,9 +307,10 @@ public class SBinTre<T> {
             return null;
         }
 
-        Queue<Node> noder = new LinkedList(); // ArrayList til aa legge node treet i ko
+        Queue<Node> noder = new LinkedList<>(); // ArrayList til aa legge node treet i ko
         ArrayList<T> verdiList = new ArrayList<>();// Arraylist til verier
 
+        noder.add(rot);
         while( !noder.isEmpty()){
             // forst legger vi noden n til listen noder saa legger vi høyre barn og venstre barn hvis det finnes
             Node<T> n = noder.poll();
