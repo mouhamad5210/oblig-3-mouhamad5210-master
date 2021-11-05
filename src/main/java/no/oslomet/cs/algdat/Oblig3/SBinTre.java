@@ -13,7 +13,7 @@ import java.util.List;
 public class SBinTre<T> {
        private static final class Node<T>   // en indre nodeklasse
     {
-        private T verdi;                   // nodens verdi
+       private T verdi;                   // nodens verdi
         private Node<T> venstre, høyre;    // venstre og høyre barn
         private Node<T> forelder;          // forelder
 
@@ -251,11 +251,12 @@ public class SBinTre<T> {
         //forste sjekker vi om forelder node er null, hvis ikke
         // saa sjekker vi om p er høyre barn og har ikke sosken(forelder node har ikke venstre barn) saa forelder noden er neste postorden node
         //Eller kaller vi forste postorden metode med p som parameter hvis p er høyre barn eller p sosken hvis p er venstre barn.
+        Node<T> father = p.forelder;
         if(p.forelder == null){
             return null;
         }
 
-        if(p.forelder.venstre == p || p.forelder.høyre == null){
+        if(p.forelder.høyre == p || p.høyre == null){
             return p.forelder;
         }
 
@@ -344,4 +345,5 @@ public class SBinTre<T> {
         
 
 } // ObligSBinTre
+
 
